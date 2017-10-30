@@ -1,0 +1,44 @@
+- name: enable ansible repository to get the latest ansible release
+  apt_repository:
+    repo:  ppa:ansible/ansible
+    state: present
+
+- name: install neccessary packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - git
+    - software-properties-common
+    - ansible
+
+- name: install dci agent
+  pip:
+    name: git+https://github.com/redhat-cip/python-dciclient.git
+    state: present
+    editable: false
+
+- name: download ansible-dci from github
+  git:
+    repo: https://github.com/redhat-cip/dci-ansible.git
+    dest: /tmp/redhat-cip/
+
+- name: create directories
+  file:
+    path: /usr/share/dci/
+    state: directory
+    mode: 0775
+    owner: root
+    group: "{{ dci_group_name }}"
+
+- name: install ansible-dci modules/plugins
+  shell: "cp -r /tmp/redhat-cip/{{ item }} /usr/share/dci/{{ item }}"
+  with_items:
+    - callback
+    - modules
+    - module_utils
+
+- name: remove temporary files
+  file:
+    path: /tmp/redhat-cip/
+    state: absent

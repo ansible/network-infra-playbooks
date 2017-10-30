@@ -1,0 +1,91 @@
+- hosts: localhost
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: Create ansible-controller VM
+      os_server:
+        state: present
+        cloud: ansible-cloud
+        name: ansible-controller
+        image: CentOS-7-x86_64-GenericCloud-1706
+        key_name: ansible-bootstrap
+        flavor: m1.small
+        floating_ips: 38.145.32.26
+        network: management-network
+        volumes:
+          - images_store
+
+    - name: Wait for ansible-controller to be reachable
+      wait_for_connection:
+      remote_user: centos
+      delegate_to: 38.145.32.26
+
+- hosts: ansible-controller
+  remote_user: centos
+
+  tasks:
+    - name: Install required packages
+      yum:
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
+      with_items:
+        - gcc
+        - python-devel
+        - git
+      become: yes
+    - name: Remove packages that will be installed with pip later
+      yum:
+        name: "{{ item }}"
+        state: absent
+      with_items:
+        - python-urllib3
+        - requests
+      become: yes
+    - name: Copy SSH private key
+      copy:
+        content: "{{ lookup('file', '~/.ssh/ansible-bootstrap') }}"
+        dest: /home/centos/.ssh/id_rsa
+        mode: 0400
+    - git:
+        name: git@github.com:ansible/network-infra.git
+        dest: /home/centos/network-infra
+        key_file: /home/centos/.ssh/id_rsa
+        accept_hostkey: yes
+    - name: Bootstrap pip
+      include_role:
+        name: bootstrap-pip
+    - name: Install pip packages from requirements.txt
+      pip:
+        requirements: /home/centos/network-infra/requirements.txt
+      become: yes
+    - command: ansible-galaxy install -r roles.yml -p /etc/ansible/roles
+      args:
+        chdir: /home/centos/network-infra
+      become: yes
+    - copy:
+        content: "{{ vaultpass }}"
+        dest: /home/centos/network-infra/.vaultpass
+    - name: Create mnt folder on centos home folder
+      file:
+        path: /home/centos/mnt
+        state: directory
+        mode: 0755
+    - name: Mount the vdb device on mnt which contains our CI images
+      mount:
+        path: /home/centos/mnt
+        src: /dev/vdb
+        fstype: ext4
+        state: mounted
+      become: yes
+    - name: Wait for volume contents to show up in mountpoint
+      shell: test -z "$(ls -A /home/centos/mnt)"
+      ignore_errors: yes
+      register: result
+      until: result.rc == 1
+      retries: 5
+      delay: 10
+    - command: flock -n /tmp/ansible-playbook.lock ansible-playbook --vault-password-file .vaultpass -i inventories/production/hosts site.yml
+      args:
+        chdir: /home/centos/network-infra

@@ -1,0 +1,5 @@
+---
+- include: ansible-controller.yml
+- include: nodepool.yml
+- include: dci-agent.yml
+#- include: zuul.yml

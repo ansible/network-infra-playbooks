@@ -1,0 +1,151 @@
+- hosts: ansible-controller
+  connection: local
+
+  tasks:
+    - name: Create .config/openstack path
+      file:
+        path: ~/.config/openstack
+        state: directory
+        mode: 0755
+    - name: "Copy the clouds.yaml file into .config/openstack"
+      copy:
+        src: 'files/{{ inventory_dir | basename }}/{{ inventory_hostname }}/clouds.yaml'
+        dest: ~/.config/openstack/clouds.yaml
+        mode: 0644
+    - include_vars:
+        file: 'files/{{ inventory_dir | basename }}/{{ inventory_hostname }}/resources.yml'
+    # Remove when 29147 lands on 2.4.1
+    - name: Check xenial image exists
+      os_image_facts:
+        cloud: ansible-cloud
+        image: ubuntu-xenial
+    - name: Create xenial image if needed
+      shell: OS_CLOUD=ansible-cloud openstack image create --file /home/centos/mnt/xenial-server-cloudimg-amd64-disk1.img --disk-format qcow2 ubuntu-xenial
+      when: not openstack_image
+    # Remove when 29147 lands on 2.4.1
+    - name: Check xenial image exists
+      os_image_facts:
+        cloud: calfonso-cloud
+        image: ubuntu-xenial
+    - name: Create xenial image if needed
+      shell: OS_CLOUD=calfonso-cloud openstack image create --file /home/centos/mnt/xenial-server-cloudimg-amd64-disk1.img --disk-format qcow2 ubuntu-xenial
+      when: not openstack_image
+    # Remove when 29147 lands on 2.4.1
+    - name: Check vyos image exists
+      os_image_facts:
+        cloud: ansible-cloud
+        image: vyos-1.1.7
+    - name: Create vyos image if needed
+      shell: OS_CLOUD=ansible-cloud openstack image create --file /home/centos/mnt/vyos-1.1.7.qcow2 --disk-format qcow2 vyos-1.1.7
+      when: not openstack_image
+    # Remove when 29147 lands on 2.4.1
+    - name: Check vyos image exists
+      os_image_facts:
+        cloud: calfonso-cloud
+        image: vyos-1.1.7
+    - name: Create vyos image if needed
+      shell: OS_CLOUD=calfonso-cloud openstack image create --file /home/centos/mnt/vyos-1.1.7.qcow2 --disk-format qcow2 vyos-1.1.7
+      when: not openstack_image
+    # Remove when 29147 lands on 2.4.1
+    - name: Check eos image exists
+      os_image_facts:
+        cloud: ansible-cloud
+        image: eos-4.18.1F
+    - name: Create eos image if needed
+      shell: OS_CLOUD=ansible-cloud openstack image create --file /home/centos/mnt/eos-4.18.1F.qcow2 --disk-format qcow2 --property hw_disk_bus=ide eos-4.18.1F
+      when: not openstack_image
+    - name: Check eos image exists
+      os_image_facts:
+        cloud: calfonso-cloud
+        image: eos-4.18.1F
+    - name: Create eos image if needed
+      shell: OS_CLOUD=calfonso-cloud openstack image create --file /home/centos/mnt/eos-4.18.1F.qcow2 --disk-format qcow2 --property hw_disk_bus=ide eos-4.18.1F
+      when: not openstack_image
+    # Remove when 29147 lands on 2.4.1
+    - name: Check nxos image exists
+      os_image_facts:
+        cloud: ansible-cloud
+        image: nxos-7.0.3.I5.1
+    - name: Create nxos image if needed
+      shell: OS_CLOUD=ansible-cloud openstack image create --file /home/centos/mnt/nxos-7.0.3.I5.1.qcow2 --disk-format qcow2 nxos-7.0.3.I5.1
+      when: not openstack_image
+    # Remove when 29147 lands on 2.4.1
+    - name: Check nxos image exists
+      os_image_facts:
+        cloud: calfonso-cloud
+        image: nxos-7.0.3.I5.1
+    - name: Create nxos image if needed
+      shell: OS_CLOUD=calfonso-cloud openstack image create --file /home/centos/mnt/nxos-7.0.3.I5.1.qcow2 --disk-format qcow2 nxos-7.0.3.I5.1
+      when: not openstack_image
+    # Remove when 29147 lands on 2.4.1
+    - name: Check junos vqfx image exists
+      os_image_facts:
+        cloud: ansible-cloud
+        image: junos-vqfx-15.1X53-D60.4
+    - name: Create junos vqfx image if needed
+      shell: OS_CLOUD=ansible-cloud openstack image create --file /home/centos/mnt/junos-vqfx-15.1X53-D60.4.qcow2 --disk-format qcow2 --property hw_disk_bus=ide junos-vqfx-15.1X53-D60.4
+      when: not openstack_image
+    # Remove when 29147 lands on 2.4.1
+    - name: Check junos vqfx image exists
+      os_image_facts:
+        cloud: calfonso-cloud
+        image: junos-vqfx-15.1X53-D60.4
+    - name: Create junos vqfx image if needed
+      shell: OS_CLOUD=calfonso-cloud openstack image create --file /home/centos/mnt/junos-vqfx-15.1X53-D60.4.qcow2 --disk-format qcow2 --property hw_disk_bus=ide junos-vqfx-15.1X53-D60.4
+      when: not openstack_image
+    # Remove when 29147 lands on 2.4.1
+    - name: Check ios image exists
+      os_image_facts:
+        cloud: ansible-cloud
+        image: ios-15.6.2.T
+    - name: Create ios image if needed
+      shell: OS_CLOUD=ansible-cloud openstack image create --file /home/centos/mnt/ios-15.6.2.T.qcow2 --disk-format qcow2 ios-15.6.2.T
+      when: not openstack_image
+    # Remove when 29147 lands on 2.4.1
+    - name: Check ios image exists
+      os_image_facts:
+        cloud: calfonso-cloud
+        image: ios-15.6.2.T
+    - name: Create ios image if needed
+      shell: OS_CLOUD=calfonso-cloud openstack image create --file /home/centos/mnt/ios-15.6.2.T.qcow2 --disk-format qcow2 ios-15.6.2.T
+      when: not openstack_image
+    # Remove when 29147 lands on 2.4.1
+    - name: Check ios-xe image exists
+      os_image_facts:
+        cloud: ansible-cloud
+        image: csr1000v-universalk9.16.03.05
+    - name: Create ios-xe image if needed
+      shell: OS_CLOUD=ansible-cloud openstack image create --file /home/centos/mnt/csr1000v-universalk9.16.03.05.qcow2 --disk-format qcow2 csr1000v-universalk9.16.03.05
+      when: not openstack_image
+    # Remove when 29147 lands on 2.4.1
+    - name: Check ios-xe image exists
+      os_image_facts:
+        cloud: calfonso-cloud
+        image: csr1000v-universalk9.16.03.05
+    - name: Create ios-xe image if needed
+      shell: OS_CLOUD=calfonso-cloud openstack image create --file /home/centos/mnt/csr1000v-universalk9.16.03.05.qcow2 --disk-format qcow2 csr1000v-universalk9.16.03.05
+      when: not openstack_image
+    # Remove when 29147 lands on 2.4.1
+    - name: Check ios-xr image exists
+      os_image_facts:
+        cloud: calfonso-cloud
+        image: iosxrv-k9-demo-6.1.2
+    - name: Create ios-xr image if needed
+      shell: OS_CLOUD=calfonso-cloud openstack image create --file /home/centos/mnt/iosxrv-k9-demo-6.1.2.qcow2 --disk-format qcow2 iosxrv-k9-demo-6.1.2
+      when: not openstack_image
+    - include_role:
+        name: ansible-role-cloud-launcher
+    - name: Wait for nodepool to be reachable
+      wait_for_connection:
+      remote_user: ubuntu
+      delegate_to: 38.145.33.216
+    - name: Wait for dci-agent to be reachable
+      wait_for_connection:
+      remote_user: centos
+      delegate_to: 38.145.34.69
+    - name: Set up cronjob to run infra playbooks
+      cron:
+        name: "run infra playbooks"
+        user: centos
+        special_time: hourly
+        job: /home/centos/network-infra/play.sh

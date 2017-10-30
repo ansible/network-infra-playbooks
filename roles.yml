@@ -1,0 +1,6 @@
+- src: git+git://git.openstack.org/openstack/ansible-role-cloud-launcher
+- src: git+git://git.openstack.org/openstack/ansible-role-zookeeper
+- src: git+git://git.openstack.org/openstack/ansible-role-nodepool
+- src: git+git://git.openstack.org/openstack/ansible-role-zuul
+- geerlingguy.repo-epel
+

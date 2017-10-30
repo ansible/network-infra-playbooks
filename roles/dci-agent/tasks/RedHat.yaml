@@ -1,0 +1,26 @@
+---
+- name: install dci-agent
+  yum:
+    name: https://packages.distributed-ci.io/dci-release.el7.noarch.rpm
+    state: present
+  become: yes
+
+- name: install dci-ansible
+  yum:
+    name: dci-ansible
+    state: present
+  become: yes
+
+- name: temp fix for bug with requests requirement
+  lineinfile:
+    path: /usr/lib/python2.7/site-packages/dciclient-0.3.3-py2.7.egg-info/requires.txt
+    regexp: '^requests'
+    line: 'requests'
+  become: yes
+
+- name: Add centos user to dci group
+  user:
+    name: centos
+    groups: dci
+    append: yes
+  become: yes

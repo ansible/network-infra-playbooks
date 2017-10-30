@@ -1,0 +1,82 @@
+- hosts: nodepool
+  become: yes
+  remote_user: ubuntu
+
+  tasks:
+    - user:
+        name: nodepool
+        home: /var/lib/nodepool
+    - file:
+        path: /var/lib/nodepool/.ssh
+        owner: nodepool
+        group: nodepool
+        state: directory
+        mode: 0700
+    - copy:
+        src: 'files/{{ inventory_dir | basename }}/{{ inventory_hostname }}/id_rsa'
+        dest: /var/lib/nodepool/.ssh
+        owner: nodepool
+        group: nodepool
+        mode: 0600
+    - copy:
+        src: 'files/{{ inventory_dir | basename }}/{{ inventory_hostname }}/authorized_keys'
+        dest: /var/lib/nodepool/.ssh
+        owner: nodepool
+        group: nodepool
+        mode: 0600
+    - file:
+        path: /var/lib/nodepool/.config/openstack
+        state: directory
+        owner: nodepool
+        group: nodepool
+        mode: 0755
+    - copy:
+        src: 'files/{{ inventory_dir | basename }}/{{ inventory_hostname }}/clouds.yaml'
+        dest: /var/lib/nodepool/.config/openstack/clouds.yaml
+        owner: nodepool
+        group: nodepool
+        mode: 0644
+    - include_role:
+        name: bootstrap-pip
+    - name: Wait for dpkg lock to be released
+      command: fuser /var/lib/dpkg/lock
+      ignore_errors: yes
+      register: result
+      until: result.rc == 1
+      retries: 5
+      delay: 10
+    - apt:
+        name: build-essential
+    - pip:
+        name: "{{ item }}"
+      with_items:
+        - jinja2
+        - junit_xml
+        - pexpect
+        - ncclient
+        - jxmlease
+    - include_role:
+        name: ansible-role-zookeeper
+    - include_role:
+        name: ansible-role-nodepool
+      vars:
+        nodepool_file_nodepool_yaml_src: 'files/{{ inventory_dir |  basename }}/{{ inventory_hostname }}/nodepool.yaml'
+    - name: Copy the Nodepool inventory folder
+      copy:
+        src: 'files/{{ inventory_dir | basename }}/{{ inventory_hostname }}/inventory'
+        dest: /var/lib/nodepool
+        owner: nodepool
+        group: nodepool
+    - name: Download openstack.py dynamic inventory from upstream
+      get_url:
+        url: https://raw.githubusercontent.com/ansible/ansible/devel/contrib/inventory/openstack.py
+        dest: /var/lib/nodepool/inventory
+        owner: nodepool
+        group: nodepool
+        mode: 0755
+    - name: Make openstack dynamic inventory executable
+      file:
+        path: '/var/lib/nodepool/inventory/openstack.py'
+        mode: 0744
+        owner: nodepool
+        group: nodepool

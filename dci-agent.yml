@@ -1,0 +1,170 @@
+- hosts: dci-agent
+  remote_user: centos
+
+  tasks:
+    - yum:
+        name: "{{ item }}"
+        update_cache: yes
+      become: yes
+      with_items:
+        - unzip
+        - git
+    - include_role:
+        name: dci-agent
+    - file:
+        path: /home/centos/.ssh
+        state: directory
+        mode: 0700
+    - copy:
+        src: 'files/{{ inventory_dir | basename }}/{{ inventory_hostname }}/id_rsa'
+        dest: /home/centos/.ssh
+        mode: 0600
+    - copy:
+        src: 'files/{{ inventory_dir | basename }}/{{ inventory_hostname }}/authorized_keys'
+        dest: /home/centos/.ssh
+        mode: 0600
+    - name: Copy dci-ansible files
+      copy:
+        src: 'files/{{ inventory_dir | basename }}/{{ inventory_hostname }}/dci-ansible'
+        dest: /home/centos
+    - name: Create /usr/share/dci/roles folder if needed
+      file:
+        path: /usr/share/dci/roles
+        state: directory
+        mode: 0755
+      become: yes
+    - name: Copy dci-feeders foles files
+      synchronize:
+        src: 'files/{{ inventory_dir | basename }}/{{ inventory_hostname }}/ansible-role-dci-feeders/'
+        dest: /usr/share/dci/roles/dci-feeders
+      become: yes
+    - name: Copy dci-feeders files
+      synchronize:
+        src: 'files/{{ inventory_dir | basename }}/{{ inventory_hostname }}/dci-feeders'
+        dest: /usr/share/dci
+      become: yes
+    - name: Copy feeders.sh file
+      copy:
+        src: 'files/{{ inventory_dir | basename }}/{{ inventory_hostname }}/feeders.sh'
+        dest: /etc/dci
+        owner: centos
+        group: centos
+      become: yes
+    - name: Set cron for running dci feeders
+      cron:
+        name: dci feeders
+        minute: '0'
+        job: source /etc/dci/feeders.sh &&  bash -c "cd /usr/share/dci/dci-feeders/ && ansible-playbook playbook.yml"
+        user: centos
+    - name: Set cron for running VyOS against Ansible devel
+      cron:
+        name: VyOS devel
+        minute: '0'
+        hour: '13'
+        job: source /etc/dci/vyos.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='vyos' -e topic='Ansible-devel'"
+        user: centos
+    - name: Set cron for running OpenvSwitch against Ansible devel
+      cron:
+        name: OpenvSwitch devel
+        minute: '0'
+        hour: '14'
+        job: source /etc/dci/openvswitch.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='openvswitch' -e topic='Ansible-devel'"
+        user: centos
+    - name: Set cron for running EOS against Ansible devel
+      cron:
+        name: EOS devel
+        minute: '0'
+        hour: '15'
+        job: source /etc/dci/eos.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='eos' -e topic='Ansible-devel'"
+        user: centos
+    - name: Set cron for running NXOS against Ansible devel
+      cron:
+        name: NXOS devel
+        minute: '0'
+        hour: '16'
+        job: source /etc/dci/nxos.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='nxos' -e topic='Ansible-devel'"
+        user: centos
+    - name: Set cron for running Junos against Ansible devel
+      cron:
+        name: JUNOS devel
+        minute: '0'
+        hour: '17'
+        job: source /etc/dci/junos.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='junos' -e topic='Ansible-devel'"
+        user: centos
+    - name: Set cron for running Junos against Ansible devel
+      cron:
+        name: IOS devel
+        minute: '0'
+        hour: '18'
+        job: source /etc/dci/ios.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='ios' -e topic='Ansible-devel'"
+        user: centos
+    - name: Set cron for running platform agnostic against Ansible devel
+      cron:
+        name: Platform agnostic devel
+        minute: '0'
+        hour: '19'
+        job: source /etc/dci/net.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='net' -e topic='Ansible-devel'"
+        user: centos
+    - name: Set cron for running IOS-XR against Ansible devel
+      cron:
+        name: IOS-XR devel
+        minute: '0'
+        hour: '20'
+        job: source /etc/dci/iosxr.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='iosxr' -e topic='Ansible-devel'"
+        user: centos
+    - name: Set cron for running VyOS against Ansible 2.4
+      cron:
+        name: VyOS 2.4
+        minute: '0'
+        hour: '1'
+        job: source /etc/dci/vyos.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='vyos' -e topic='Ansible-2.4'"
+        user: centos
+    - name: Set cron for running OpenvSwitch against Ansible 2.4
+      cron:
+        name: OpenvSwitch 2.4
+        minute: '0'
+        hour: '2'
+        job: source /etc/dci/openvswitch.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='openvswitch' -e topic='Ansible-2.4'"
+        user: centos
+    - name: Set cron for running EOS against Ansible 2.4
+      cron:
+        name: EOS 2.4
+        minute: '0'
+        hour: '3'
+        job: source /etc/dci/eos.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='eos' -e topic='Ansible-2.4'"
+        user: centos
+    - name: Set cron for running NXOS against Ansible 2.4
+      cron:
+        name: NXOS 2.4
+        minute: '0'
+        hour: '4'
+        job: source /etc/dci/nxos.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='nxos' -e topic='Ansible-2.4'"
+        user: centos
+    - name: Set cron for running JUNOS against Ansible 2.4
+      cron:
+        name: JUNOS 2.4
+        minute: '0'
+        hour: '5'
+        job: source /etc/dci/junos.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='junos' -e topic='Ansible-2.4'"
+        user: centos
+    - name: Set cron for running Junos against Ansible 2.4
+      cron:
+        name: IOS 2.4
+        minute: '0'
+        hour: '6'
+        job: source /etc/dci/ios.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='ios' -e topic='Ansible-2.4'"
+        user: centos
+    - name: Set cron for running platform agnostic against Ansible 2.4
+      cron:
+        name: Platform agnostic 2.4
+        minute: '0'
+        hour: '7'
+        job: source /etc/dci/net.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='net' -e topic='Ansible-2.4'"
+        user: centos
+    - name: Set cron for running IOS-XR against Ansible 2.4
+      cron:
+        name: IOS-XR 2.4
+        minute: '0'
+        hour: '8'
+        job: source /etc/dci/iosxr.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='iosxr' -e topic='Ansible-2.4'"
+        user: centos

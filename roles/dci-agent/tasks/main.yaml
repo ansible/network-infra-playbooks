@@ -1,0 +1,71 @@
+---
+- name: Ensure required variables are defined
+  fail:
+    msg: "{{ item }} value missing and is required. See docs/agent_setup.md for details"
+  when: "{{ item }} is not defined"
+  with_items:
+    - dci_group_name
+    - remotecis
+
+- name: Ensure that the role is being used on a supported OS
+  assert:
+    that: (ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7') or
+          (ansible_distribution == 'Ubuntu')
+
+- name: install EPEL
+  include_role:
+    name: geerlingguy.repo-epel
+  when: ansible_os_family == "RedHat"
+  become: yes
+
+- name: install pip
+  package:
+    name: python-pip
+    state: present
+  become: yes
+
+- name: Install dependencies
+  pip:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - junit_xml   # allows usage of the junit callback plugin
+    - xunitmerge  # allows user to merge junit into one file
+  become: yes
+
+- name: create group for DCI files
+  group:
+    name: "{{ dci_group_name }}"
+    state: present
+  become: yes
+
+- name: create directory for storing api keys
+  file:
+    path: /etc/dci
+    state: directory
+    mode: 0770
+    owner: root
+    group: "{{ dci_group_name }}"
+  become: yes
+
+- name: set up connection information
+  template:
+    src: env.sh
+    dest: /etc/dci/{{ item.name }}.sh
+    owner: root
+    group: "{{ dci_group_name }}"
+    mode: 0770
+  with_items: "{{remotecis}}"
+  no_log: true
+  become: yes
+
+- name: include OS specific tasks
+  block:
+  - debug: msg="Running tasks for {{ ansible_os_family }} systems"
+  - include: "{{ ansible_os_family }}.yaml"
+
+- name: setup correct ansible.cfg
+  template:
+    src: ansible.cfg
+    dest: /etc/ansible/ansible.cfg
+  become: yes

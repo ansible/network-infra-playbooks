@@ -1,0 +1,5 @@
+---
+- shell: python < <(curl -s https://bootstrap.pypa.io/get-pip.py)
+  args:
+    creates: /usr/bin/pip
+  become: yes
