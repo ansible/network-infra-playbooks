@@ -11,7 +11,7 @@
         image: CentOS-7-x86_64-GenericCloud-1706
         key_name: ansible-bootstrap
         flavor: m1.small
-        floating_ips: 38.145.32.26
+        floating_ips: hostvars['ansible-controller']['ansible_host']
         network: management-network
         volumes:
           - images_store
@@ -19,7 +19,7 @@
     - name: Wait for ansible-controller to be reachable
       wait_for_connection:
       remote_user: centos
-      delegate_to: 38.145.32.26
+      delegate_to: hostvars['ansible-controller']['ansible_host']
 
 - hosts: ansible-controller
   remote_user: centos

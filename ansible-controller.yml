@@ -138,11 +138,11 @@
     - name: Wait for nodepool to be reachable
       wait_for_connection:
       remote_user: ubuntu
-      delegate_to: 38.145.33.216
+      delegate_to: hostvars['nodepool']['ansible_host']
     - name: Wait for dci-agent to be reachable
       wait_for_connection:
       remote_user: centos
-      delegate_to: 38.145.34.69
+      delegate_to: hostvars['dci-agent']['ansible_host']
     - name: Set up cronjob to run infra playbooks
       cron:
         name: "run infra playbooks"
