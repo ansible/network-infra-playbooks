@@ -148,4 +148,4 @@
         name: "run infra playbooks"
         user: centos
         special_time: hourly
-        job: /home/centos/network-infra/play.sh
+        job: /home/centos/network-infra-playbooks/play.sh
