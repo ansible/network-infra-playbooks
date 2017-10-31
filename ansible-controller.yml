@@ -149,4 +149,4 @@
         user: centos
         special_time: hourly
         job: /home/centos/network-infra-playbooks/play.sh
-      when: hostvars['ansible-controller']['enable-play-cronjob']
+      when: hostvars['ansible-controller']['enable_play_cronjob']
