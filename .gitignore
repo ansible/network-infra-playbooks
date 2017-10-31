@@ -1,4 +1,4 @@
 .vaultpass
 .environment
-files/
-inventories/
+files
+inventories
