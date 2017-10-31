@@ -1,5 +1,8 @@
 #!/bin/bash
 # This script is meant to be invoked in a cronjob to continously run our infra playbooks
+cd /home/centos/network-infra
+git checkout master -q
+git pull -q
 cd /home/centos/network-infra-playbooks
 git checkout master -q
 git pull -q
