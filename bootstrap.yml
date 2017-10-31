@@ -64,9 +64,14 @@
       args:
         chdir: /home/centos/network-infra
       become: yes
-    - copy:
+    - name: Copy vault password to file for ongoing use
+      copy:
         content: "{{ vaultpass }}"
         dest: /home/centos/network-infra/.vaultpass
+    - name: Copy environment to file for ongoing use
+      copy:
+        content: "{{ environment }}"
+        dest: /home/centos/network-infra/.environment
     - name: Create mnt folder on centos home folder
       file:
         path: /home/centos/mnt
@@ -86,6 +91,6 @@
       until: result.rc == 1
       retries: 5
       delay: 10
-    - command: flock -n /tmp/ansible-playbook.lock ansible-playbook --vault-password-file .vaultpass -i inventories/production/hosts site.yml
+    - command: "flock -n /tmp/ansible-playbook.lock ansible-playbook --vault-password-file .vaultpass -i inventories/{{ environment }}/hosts site.yml"
       args:
         chdir: /home/centos/network-infra
