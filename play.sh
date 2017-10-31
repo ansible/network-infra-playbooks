@@ -3,4 +3,4 @@
 cd /home/centos/network-infra
 git checkout master -q
 git pull -q
-flock -n /tmp/ansible-playbook.lock ansible-playbook --vault-password-file .vaultpass -i inventories/production/hosts site.yml
+flock -n /tmp/ansible-playbook.lock ansible-playbook --vault-password-file .vaultpass -i inventories/$(cat .environment)/hosts site.yml
