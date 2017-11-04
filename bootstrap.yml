@@ -62,11 +62,11 @@
         name: bootstrap-pip
     - name: Install pip packages from requirements.txt
       pip:
-        requirements: /home/centos/network-infra/requirements.txt
+        requirements: /home/centos/network-infra-playbooks/requirements.txt
       become: yes
     - command: ansible-galaxy install -r roles.yml -p /etc/ansible/roles
       args:
-        chdir: /home/centos/network-infra
+        chdir: /home/centos/network-infra-playbooks
       become: yes
     - name: Copy vault password to file for ongoing use
       copy:
