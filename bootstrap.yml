@@ -6,8 +6,8 @@
     - name: Create ansible-controller VM
       os_server:
         state: present
-        cloud: ansible-cloud
-        name: "{{ hostvars['ansible-controller']['bootstrap_cloud'] }}"
+        cloud: "{{ hostvars['ansible-controller']['bootstrap_cloud'] }}"
+        name: ansible-controller
         image: CentOS-7-x86_64-GenericCloud-1706
         key_name: ansible-bootstrap
         flavor: m1.small
