@@ -7,7 +7,7 @@
       os_server:
         state: present
         cloud: ansible-cloud
-        name: ansible-controller
+        name: "{{ hostvars['ansible-controller']['bootstrap_cloud'] }}"
         image: CentOS-7-x86_64-GenericCloud-1706
         key_name: ansible-bootstrap
         flavor: m1.small
