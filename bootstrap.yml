@@ -84,6 +84,16 @@
       synchronize:
         src: ~/images
         dest: /home/centos/images
+    - name: Create link to network-infra files
+      file:
+        src: /home/centos/network-infra/files
+        dest: /home/centos/network-infra-playbooks/files
+        state: link
+    - name: Create link to network-infra inventories
+      file:
+        src: /home/centos/network-infra/inventories
+        dest: /home/centos/network-infra-playbooks/inventories
+        state: link
     - command: "flock -n /tmp/ansible-playbook.lock ansible-playbook --vault-password-file .vaultpass -i inventories/{{ inventory_dir | basename }}/hosts site.yml"
       args:
-        chdir: /home/centos/network-infra
+        chdir: /home/centos/network-infra-playbooks
