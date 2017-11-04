@@ -1,5 +1,12 @@
 ---
-- shell: python < <(curl -s https://bootstrap.pypa.io/get-pip.py)
-  args:
-    creates: /usr/bin/pip
-  become: yes
+- stat:
+    path: /usr/bin/pip
+  register: st
+
+- block:
+    - get_url:
+        url: https://bootstrap.pypa.io/get-pip.py
+        dest: /tmp
+    - shell: python /tmp/get-pip.py
+      become: yes
+  when: not st.stat.exists
