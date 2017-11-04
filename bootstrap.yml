@@ -95,6 +95,6 @@
         src: /home/centos/network-infra/inventories
         dest: /home/centos/network-infra-playbooks/inventories
         state: link
-    - command: "flock -n /tmp/ansible-playbook.lock ansible-playbook --vault-password-file .vaultpass -i inventories/{{ inventory_dir | basename }}/hosts site.yml"
+    - command: "flock -n /tmp/ansible-playbook.lock ansible-playbook --vault-password-file .vaultpass -i inventories/{{ inventory_dir | basename }} site.yml"
       args:
         chdir: /home/centos/network-infra-playbooks
