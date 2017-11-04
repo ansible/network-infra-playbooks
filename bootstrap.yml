@@ -46,7 +46,12 @@
         content: "{{ lookup('file', '~/.ssh/ansible-bootstrap') }}"
         dest: /home/centos/.ssh/id_rsa
         mode: 0400
-    - git:
+    - name: Clone network-infra-playbooks repo
+      git:
+        name: git@github.com:ansible/network-infra-playbooks.git
+        dest: /home/centos/network-infra
+    - name: Clone network-infra repo
+      git:
         name: git@github.com:ansible/network-infra.git
         dest: /home/centos/network-infra
         key_file: /home/centos/.ssh/id_rsa
