@@ -83,7 +83,7 @@
         mode: 0755
     - name: Copy local images folder contents on remote
       synchronize:
-        src: ~/images
+        src: ~/images/
         dest: /home/centos/images
     - name: Create link to network-infra files
       file:
