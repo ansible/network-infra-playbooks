@@ -49,7 +49,7 @@
     - name: Clone network-infra-playbooks repo
       git:
         name: git@github.com:ansible/network-infra-playbooks.git
-        dest: /home/centos/network-infra
+        dest: /home/centos/network-infra-playbooks
     - name: Clone network-infra repo
       git:
         name: git@github.com:ansible/network-infra.git
