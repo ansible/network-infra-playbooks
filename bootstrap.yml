@@ -68,7 +68,7 @@
         dest: /home/centos/network-infra/.vaultpass
     - name: Copy ci_environment to file for ongoing use
       copy:
-        content: "{{ ci_environment }}"
+        content: "{{ inventory_dir | basename }}"
         dest: /home/centos/network-infra/.ci_environment
     - name: Create images folder on centos home folder
       file:
@@ -79,6 +79,6 @@
       synchronize:
         src: ~/images
         dest: /home/centos/images
-    - command: "flock -n /tmp/ansible-playbook.lock ansible-playbook --vault-password-file .vaultpass -i inventories/{{ ci_environment }}/hosts site.yml"
+    - command: "flock -n /tmp/ansible-playbook.lock ansible-playbook --vault-password-file .vaultpass -i inventories/{{ inventory_dir | basename }}/hosts site.yml"
       args:
         chdir: /home/centos/network-infra
