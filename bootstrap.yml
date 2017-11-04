@@ -71,11 +71,11 @@
     - name: Copy vault password to file for ongoing use
       copy:
         content: "{{ vaultpass }}"
-        dest: /home/centos/network-infra/.vaultpass
+        dest: /home/centos/network-infra-playbooks/.vaultpass
     - name: Copy ci_environment to file for ongoing use
       copy:
         content: "{{ inventory_dir | basename }}"
-        dest: /home/centos/network-infra/.ci_environment
+        dest: /home/centos/network-infra-playbooks/.ci_environment
     - name: Create images folder on centos home folder
       file:
         path: /home/centos/images
