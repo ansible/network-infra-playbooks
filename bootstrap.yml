@@ -13,8 +13,6 @@
         flavor: m1.small
         floating_ips: "{{ hostvars['ansible-controller']['ansible_host'] }}"
         network: management-network
-        volumes:
-          - images_store
 
     - name: Wait for ansible-controller to be reachable
       wait_for_connection:
@@ -72,25 +70,15 @@
       copy:
         content: "{{ ci_environment }}"
         dest: /home/centos/network-infra/.ci_environment
-    - name: Create mnt folder on centos home folder
+    - name: Create images folder on centos home folder
       file:
-        path: /home/centos/mnt
+        path: /home/centos/images
         state: directory
         mode: 0755
-    - name: Mount the vdb device on mnt which contains our CI images
-      mount:
-        path: /home/centos/mnt
-        src: /dev/vdb
-        fstype: ext4
-        state: mounted
-      become: yes
-    - name: Wait for volume contents to show up in mountpoint
-      shell: test -z "$(ls -A /home/centos/mnt)"
-      ignore_errors: yes
-      register: result
-      until: result.rc == 1
-      retries: 5
-      delay: 10
+    - name: Copy local images folder contents on remote
+      synchronize:
+        src: ~/images
+        dest: /home/centos/images
     - command: "flock -n /tmp/ansible-playbook.lock ansible-playbook --vault-password-file .vaultpass -i inventories/{{ ci_environment }}/hosts site.yml"
       args:
         chdir: /home/centos/network-infra
