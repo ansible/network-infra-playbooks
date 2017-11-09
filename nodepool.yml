@@ -56,6 +56,7 @@
         - ncclient
         - jxmlease
         - scp
+        - coverage
     - include_role:
         name: ansible-role-zookeeper
     - include_role:
