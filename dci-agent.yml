@@ -71,26 +71,26 @@
             hour: '14'
             job: source /etc/dci/openvswitch.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='openvswitch' -e topic='Ansible-devel'"
             user: centos
+        - name: Set cron for running Junos against Ansible devel
+          cron:
+            name: JUNOS devel
+            minute: '0'
+            hour: '15'
+            job: source /etc/dci/junos.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='junos' -e topic='Ansible-devel'"
+            user: centos
         - name: Set cron for running EOS against Ansible devel
           cron:
             name: EOS devel
             minute: '0'
-            hour: '15'
+            hour: '16'
             job: source /etc/dci/eos.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='eos' -e topic='Ansible-devel'"
             user: centos
         - name: Set cron for running NXOS against Ansible devel
           cron:
             name: NXOS devel
             minute: '0'
-            hour: '16'
-            job: source /etc/dci/nxos.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='nxos' -e topic='Ansible-devel'"
-            user: centos
-        - name: Set cron for running Junos against Ansible devel
-          cron:
-            name: JUNOS devel
-            minute: '0'
             hour: '17'
-            job: source /etc/dci/junos.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='junos' -e topic='Ansible-devel'"
+            job: source /etc/dci/nxos.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='nxos' -e topic='Ansible-devel'"
             user: centos
         - name: Set cron for running Junos against Ansible devel
           cron:
@@ -127,26 +127,26 @@
             hour: '2'
             job: source /etc/dci/openvswitch.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='openvswitch' -e topic='Ansible-2.4'"
             user: centos
+        - name: Set cron for running JUNOS against Ansible 2.4
+          cron:
+            name: JUNOS 2.4
+            minute: '0'
+            hour: '3'
+            job: source /etc/dci/junos.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='junos' -e topic='Ansible-2.4'"
+            user: centos
         - name: Set cron for running EOS against Ansible 2.4
           cron:
             name: EOS 2.4
             minute: '0'
-            hour: '3'
+            hour: '4'
             job: source /etc/dci/eos.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='eos' -e topic='Ansible-2.4'"
             user: centos
         - name: Set cron for running NXOS against Ansible 2.4
           cron:
             name: NXOS 2.4
             minute: '0'
-            hour: '4'
-            job: source /etc/dci/nxos.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='nxos' -e topic='Ansible-2.4'"
-            user: centos
-        - name: Set cron for running JUNOS against Ansible 2.4
-          cron:
-            name: JUNOS 2.4
-            minute: '0'
             hour: '5'
-            job: source /etc/dci/junos.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='junos' -e topic='Ansible-2.4'"
+            job: source /etc/dci/nxos.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='nxos' -e topic='Ansible-2.4'"
             user: centos
         - name: Set cron for running Junos against Ansible 2.4
           cron:
