@@ -106,6 +106,7 @@
             hour: '19'
             job: source /etc/dci/net.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='net' -e topic='Ansible-devel'"
             user: centos
+            state: absent
         - name: Set cron for running IOS-XR against Ansible devel
           cron:
             name: IOS-XR devel
@@ -162,6 +163,7 @@
             hour: '7'
             job: source /etc/dci/net.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='net' -e topic='Ansible-2.4'"
             user: centos
+            state: absent
         - name: Set cron for running IOS-XR against Ansible 2.4
           cron:
             name: IOS-XR 2.4
