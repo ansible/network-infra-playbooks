@@ -99,14 +99,6 @@
             hour: '18'
             job: source /etc/dci/ios.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='ios' -e topic='Ansible-devel'"
             user: centos
-        - name: Set cron for running platform agnostic against Ansible devel
-          cron:
-            name: Platform agnostic devel
-            minute: '0'
-            hour: '19'
-            job: source /etc/dci/net.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='net' -e topic='Ansible-devel'"
-            user: centos
-            state: absent
         - name: Set cron for running IOS-XR against Ansible devel
           cron:
             name: IOS-XR devel
@@ -156,14 +148,6 @@
             hour: '6'
             job: source /etc/dci/ios.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='ios' -e topic='Ansible-2.4'"
             user: centos
-        - name: Set cron for running platform agnostic against Ansible 2.4
-          cron:
-            name: Platform agnostic 2.4
-            minute: '0'
-            hour: '7'
-            job: source /etc/dci/net.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='net' -e topic='Ansible-2.4'"
-            user: centos
-            state: absent
         - name: Set cron for running IOS-XR against Ansible 2.4
           cron:
             name: IOS-XR 2.4
