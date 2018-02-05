@@ -30,8 +30,8 @@
         owner: nodepool
         group: nodepool
         mode: 0644
-    - include_role:
-        name: bootstrap-pip
+    - apt:
+        name: python3-pip
     - name: Wait for dpkg lock to be released
       command: fuser /var/lib/dpkg/lock
       ignore_errors: yes
