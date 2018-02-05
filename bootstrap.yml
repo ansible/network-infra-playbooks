@@ -3,6 +3,21 @@
   gather_facts: no
 
   tasks:
+    - name: Create ssh-from-external security group
+      os_security_group:
+        state: present
+        cloud: "{{ hostvars['ansible-controller']['bootstrap_cloud'] }}"
+        name: ssh-from-external
+        description: Allow SSH from all external IPs
+    - name: Add rules to ssh-from-external security group
+      os_security_group_rule:
+        state: present
+        cloud: "{{ hostvars['ansible-controller']['bootstrap_cloud'] }}"
+        security_group: ssh-from-external
+        protocol: tcp
+        port_range_min: 22
+        port_range_max: 22
+        remote_ip_prefix: 0.0.0.0/0
     - name: Create ansible-controller VM
       os_server:
         state: present
@@ -12,6 +27,7 @@
         key_name: ansible-bootstrap
         flavor: m1.small
         floating_ips: "{{ hostvars['ansible-controller']['ansible_host'] }}"
+        security_groups: ssh-from-external
         network: management-network
 
     - name: Wait for ansible-controller to be reachable
