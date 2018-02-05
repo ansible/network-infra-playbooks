@@ -18,6 +18,12 @@
         owner: nodepool
         group: nodepool
         mode: 0600
+    - copy:
+        src: 'files/{{ inventory_dir | basename }}/{{ inventory_hostname }}/authorized_keys'
+        dest: /var/lib/nodepool/.ssh
+        owner: nodepool
+        group: nodepool
+        mode: 0600
     - file:
         path: /var/lib/nodepool/.config/openstack
         state: directory
