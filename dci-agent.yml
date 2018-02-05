@@ -63,9 +63,10 @@
             user: centos
         - name: Set cron for running OpenvSwitch against Ansible devel
           cron:
-            state: absent
+            state: present
             name: OpenvSwitch devel
             minute: '0'
+            hour: '14'
             job: source /etc/dci/openvswitch.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='openvswitch' -e topic='Ansible-devel'"
             user: centos
         - name: Set cron for running Junos against Ansible devel
