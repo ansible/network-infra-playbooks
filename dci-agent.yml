@@ -19,10 +19,6 @@
         src: 'files/{{ inventory_dir | basename }}/{{ inventory_hostname }}/id_rsa'
         dest: /home/centos/.ssh
         mode: 0600
-    - copy:
-        src: 'files/{{ inventory_dir | basename }}/{{ inventory_hostname }}/authorized_keys'
-        dest: /home/centos/.ssh
-        mode: 0600
     - name: Copy dci-ansible files
       copy:
         src: 'files/{{ inventory_dir | basename }}/{{ inventory_hostname }}/dci-ansible'
