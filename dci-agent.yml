@@ -83,7 +83,7 @@
             user: centos
         - name: Set cron for running EOS against Ansible devel
           cron:
-            state: absent
+            state: present
             name: EOS devel
             minute: '0'
             hour: '16'
@@ -139,7 +139,7 @@
             user: centos
         - name: Set cron for running EOS against Ansible 2.4
           cron:
-            state: absent
+            state: present
             name: EOS 2.4
             minute: '0'
             hour: '4'
