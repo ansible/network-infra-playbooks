@@ -75,7 +75,7 @@
             user: centos
         - name: Set cron for running Junos against Ansible devel
           cron:
-            state: absent
+            state: present
             name: JUNOS devel
             minute: '0'
             hour: '15'
@@ -131,7 +131,7 @@
             user: centos
         - name: Set cron for running JUNOS against Ansible 2.4
           cron:
-            state: absent
+            state: present
             name: JUNOS 2.4
             minute: '0'
             hour: '3'
