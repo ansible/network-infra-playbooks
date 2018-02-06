@@ -107,7 +107,7 @@
             user: centos
         - name: Set cron for running IOS-XR against Ansible devel
           cron:
-            state: absent
+            state: present
             name: IOS-XR devel
             minute: '0'
             hour: '20'
@@ -163,7 +163,7 @@
             user: centos
         - name: Set cron for running IOS-XR against Ansible 2.4
           cron:
-            state: absent
+            state: present
             name: IOS-XR 2.4
             minute: '0'
             hour: '8'
