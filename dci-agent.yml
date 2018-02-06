@@ -91,7 +91,7 @@
             user: centos
         - name: Set cron for running NXOS against Ansible devel
           cron:
-            state: absent
+            state: present
             name: NXOS devel
             minute: '0'
             hour: '17'
@@ -147,7 +147,7 @@
             user: centos
         - name: Set cron for running NXOS against Ansible 2.4
           cron:
-            state: absent
+            state: present
             name: NXOS 2.4
             minute: '0'
             hour: '5'
