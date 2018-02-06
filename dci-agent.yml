@@ -59,7 +59,7 @@
             user: centos
         - name: Set cron for running VyOS against Ansible devel
           cron:
-            state: absent
+            state: present
             name: VyOS devel
             minute: '0'
             hour: '13'
@@ -115,7 +115,7 @@
             user: centos
         - name: Set cron for running VyOS against Ansible 2.4
           cron:
-            state: absent
+            state: present
             name: VyOS 2.4
             minute: '0'
             hour: '1'
