@@ -97,9 +97,9 @@
             hour: '17'
             job: source /etc/dci/nxos.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='nxos' -e topic='Ansible-devel'"
             user: centos
-        - name: Set cron for running Junos against Ansible devel
+        - name: Set cron for running IOS against Ansible devel
           cron:
-            state: absent
+            state: present
             name: IOS devel
             minute: '0'
             hour: '18'
@@ -153,9 +153,9 @@
             hour: '5'
             job: source /etc/dci/nxos.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='nxos' -e topic='Ansible-2.4'"
             user: centos
-        - name: Set cron for running Junos against Ansible 2.4
+        - name: Set cron for running IOS against Ansible 2.4
           cron:
-            state: absent
+            state: present
             name: IOS 2.4
             minute: '0'
             hour: '6'
