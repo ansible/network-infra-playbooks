@@ -123,7 +123,7 @@
             user: centos
         - name: Set cron for running OpenvSwitch against Ansible 2.4
           cron:
-            state: absent
+            state: present
             name: OpenvSwitch 2.4
             minute: '0'
             hour: '2'
