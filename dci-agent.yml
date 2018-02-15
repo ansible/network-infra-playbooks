@@ -114,14 +114,6 @@
             hour: '20'
             job: source /etc/dci/iosxr.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='iosxr' -e topic='Ansible-devel'"
             user: centos
-        - name: Set cron for running VyOS against Ansible 2.4
-          cron:
-            state: present
-            name: VyOS 2.4
-            minute: '0'
-            hour: '1'
-            job: source /etc/dci/vyos.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='vyos' -e topic='Ansible-2.4'"
-            user: centos
 ####################
         - name: Set cron for running OpenvSwitch against Ansible 2.4
           cron:
@@ -170,6 +162,14 @@
             minute: '0'
             hour: '8'
             job: source /etc/dci/iosxr.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='iosxr' -e topic='Ansible-2.4'"
+            user: centos
+        - name: Set cron for running VyOS against Ansible 2.4
+          cron:
+            state: present
+            name: VyOS 2.4
+            minute: '0'
+            hour: '1'
+            job: source /etc/dci/vyos.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='vyos' -e topic='Ansible-2.4'"
             user: centos
 ####################
         - name: Set cron for running VyOS against Ansible 2.5
@@ -227,13 +227,5 @@
             minute: '0'
             hour: '20'
             job: source /etc/dci/iosxr.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='iosxr' -e topic='Ansible-2.5'"
-            user: centos
-        - name: Set cron for running VyOS against Ansible 2.4
-          cron:
-            state: present
-            name: VyOS 2.4
-            minute: '0'
-            hour: '1'
-            job: source /etc/dci/vyos.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='vyos' -e topic='Ansible-2.4'"
             user: centos
       when: hostvars['dci-agent']['enable_dci_cronjobs']
