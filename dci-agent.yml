@@ -59,7 +59,7 @@
             user: centos
         - name: Set cron for running VyOS against Ansible devel
           cron:
-            state: present
+            state: absent
             name: VyOS devel
             minute: '0'
             hour: '13'
@@ -67,7 +67,7 @@
             user: centos
         - name: Set cron for running OpenvSwitch against Ansible devel
           cron:
-            state: present
+            state: absent
             name: OpenvSwitch devel
             minute: '0'
             hour: '14'
@@ -75,7 +75,7 @@
             user: centos
         - name: Set cron for running Junos against Ansible devel
           cron:
-            state: present
+            state: absent
             name: JUNOS devel
             minute: '0'
             hour: '15'
@@ -83,7 +83,7 @@
             user: centos
         - name: Set cron for running EOS against Ansible devel
           cron:
-            state: present
+            state: absent
             name: EOS devel
             minute: '0'
             hour: '16'
@@ -91,7 +91,7 @@
             user: centos
         - name: Set cron for running NXOS against Ansible devel
           cron:
-            state: present
+            state: absent
             name: NXOS devel
             minute: '0'
             hour: '17'
@@ -99,7 +99,7 @@
             user: centos
         - name: Set cron for running IOS against Ansible devel
           cron:
-            state: present
+            state: absent
             name: IOS devel
             minute: '0'
             hour: '18'
@@ -107,7 +107,7 @@
             user: centos
         - name: Set cron for running IOS-XR against Ansible devel
           cron:
-            state: present
+            state: absent
             name: IOS-XR devel
             minute: '0'
             hour: '20'
