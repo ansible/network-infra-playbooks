@@ -57,61 +57,61 @@
             minute: '0'
             job: source /etc/dci/feeders.sh &&  bash -c "cd /usr/share/dci/dci-feeders/ && ansible-playbook playbook.yml"
             user: centos
-        - name: Set cron for running VyOS against Ansible devel
+        - name: Set cron for running VyOS against Ansible 2.5
           cron:
             state: present
-            name: VyOS devel
+            name: VyOS 2.5
             minute: '0'
             hour: '13'
-            job: source /etc/dci/vyos.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='vyos' -e topic='Ansible-devel'"
+            job: source /etc/dci/vyos.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='vyos' -e topic='Ansible-2.5'"
             user: centos
-        - name: Set cron for running OpenvSwitch against Ansible devel
+        - name: Set cron for running OpenvSwitch against Ansible 2.5
           cron:
             state: present
-            name: OpenvSwitch devel
+            name: OpenvSwitch 2.5
             minute: '0'
             hour: '14'
-            job: source /etc/dci/openvswitch.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='openvswitch' -e topic='Ansible-devel'"
+            job: source /etc/dci/openvswitch.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='openvswitch' -e topic='Ansible-2.5'"
             user: centos
-        - name: Set cron for running Junos against Ansible devel
+        - name: Set cron for running Junos against Ansible 2.5
           cron:
             state: present
-            name: JUNOS devel
+            name: JUNOS 2.5
             minute: '0'
             hour: '15'
-            job: source /etc/dci/junos.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='junos' -e topic='Ansible-devel'"
+            job: source /etc/dci/junos.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='junos' -e topic='Ansible-2.5'"
             user: centos
-        - name: Set cron for running EOS against Ansible devel
+        - name: Set cron for running EOS against Ansible 2.5
           cron:
             state: present
-            name: EOS devel
+            name: EOS 2.5
             minute: '0'
             hour: '16'
-            job: source /etc/dci/eos.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='eos' -e topic='Ansible-devel'"
+            job: source /etc/dci/eos.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='eos' -e topic='Ansible-2.5'"
             user: centos
-        - name: Set cron for running NXOS against Ansible devel
+        - name: Set cron for running NXOS against Ansible 2.5
           cron:
             state: present
-            name: NXOS devel
+            name: NXOS 2.5
             minute: '0'
             hour: '17'
-            job: source /etc/dci/nxos.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='nxos' -e topic='Ansible-devel'"
+            job: source /etc/dci/nxos.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='nxos' -e topic='Ansible-2.5'"
             user: centos
-        - name: Set cron for running IOS against Ansible devel
+        - name: Set cron for running IOS against Ansible 2.5
           cron:
             state: present
-            name: IOS devel
+            name: IOS 2.5
             minute: '0'
             hour: '18'
-            job: source /etc/dci/ios.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='ios' -e topic='Ansible-devel'"
+            job: source /etc/dci/ios.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='ios' -e topic='Ansible-2.5'"
             user: centos
-        - name: Set cron for running IOS-XR against Ansible devel
+        - name: Set cron for running IOS-XR against Ansible 2.5
           cron:
             state: present
-            name: IOS-XR devel
+            name: IOS-XR 2.5
             minute: '0'
             hour: '20'
-            job: source /etc/dci/iosxr.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='iosxr' -e topic='Ansible-devel'"
+            job: source /etc/dci/iosxr.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='iosxr' -e topic='Ansible-2.5'"
             user: centos
         - name: Set cron for running VyOS against Ansible 2.4
           cron:
