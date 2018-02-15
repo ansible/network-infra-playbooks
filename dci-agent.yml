@@ -174,7 +174,7 @@
 ####################
         - name: Set cron for running VyOS against Ansible 2.5
           cron:
-            state: absent
+            state: present
             name: VyOS 2.5
             minute: '0'
             hour: '13'
@@ -182,7 +182,7 @@
             user: centos
         - name: Set cron for running OpenvSwitch against Ansible 2.5
           cron:
-            state: absent
+            state: present
             name: OpenvSwitch 2.5
             minute: '0'
             hour: '14'
@@ -190,7 +190,7 @@
             user: centos
         - name: Set cron for running Junos against Ansible 2.5
           cron:
-            state: absent
+            state: present
             name: JUNOS 2.5
             minute: '0'
             hour: '15'
@@ -198,7 +198,7 @@
             user: centos
         - name: Set cron for running EOS against Ansible 2.5
           cron:
-            state: absent
+            state: present
             name: EOS 2.5
             minute: '0'
             hour: '16'
@@ -206,7 +206,7 @@
             user: centos
         - name: Set cron for running NXOS against Ansible 2.5
           cron:
-            state: absent
+            state: present
             name: NXOS 2.5
             minute: '0'
             hour: '17'
@@ -214,7 +214,7 @@
             user: centos
         - name: Set cron for running IOS against Ansible 2.5
           cron:
-            state: absent
+            state: present
             name: IOS 2.5
             minute: '0'
             hour: '18'
@@ -222,7 +222,7 @@
             user: centos
         - name: Set cron for running IOS-XR against Ansible 2.5
           cron:
-            state: absent
+            state: present
             name: IOS-XR 2.5
             minute: '0'
             hour: '20'
