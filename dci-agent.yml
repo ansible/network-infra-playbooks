@@ -63,7 +63,7 @@
             state: present
             name: VyOS devel
             minute: '0'
-            hour: '13'
+            hour: '1'
             job: source /etc/dci/vyos.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='vyos' -e topic='Ansible-devel'"
             user: centos
         - name: Set cron for running OpenvSwitch against Ansible devel
@@ -71,7 +71,7 @@
             state: present
             name: OpenvSwitch devel
             minute: '0'
-            hour: '14'
+            hour: '2'
             job: source /etc/dci/openvswitch.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='openvswitch' -e topic='Ansible-devel'"
             user: centos
         - name: Set cron for running Junos against Ansible devel
@@ -79,7 +79,7 @@
             state: present
             name: JUNOS devel
             minute: '0'
-            hour: '15'
+            hour: '3'
             job: source /etc/dci/junos.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='junos' -e topic='Ansible-devel'"
             user: centos
         - name: Set cron for running EOS against Ansible devel
@@ -87,7 +87,7 @@
             state: present
             name: EOS devel
             minute: '0'
-            hour: '16'
+            hour: '4'
             job: source /etc/dci/eos.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='eos' -e topic='Ansible-devel'"
             user: centos
         - name: Set cron for running NXOS against Ansible devel
@@ -95,7 +95,7 @@
             state: present
             name: NXOS devel
             minute: '0'
-            hour: '17'
+            hour: '5'
             job: source /etc/dci/nxos.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='nxos' -e topic='Ansible-devel'"
             user: centos
         - name: Set cron for running IOS against Ansible devel
@@ -103,7 +103,7 @@
             state: present
             name: IOS devel
             minute: '0'
-            hour: '18'
+            hour: '6'
             job: source /etc/dci/ios.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='ios' -e topic='Ansible-devel'"
             user: centos
         - name: Set cron for running IOS-XR against Ansible devel
@@ -111,7 +111,7 @@
             state: present
             name: IOS-XR devel
             minute: '0'
-            hour: '20'
+            hour: '7'
             job: source /etc/dci/iosxr.sh && bash -c "cd dci-ansible && ansible-playbook -i inventory playbook.yml -e platform='iosxr' -e topic='Ansible-devel'"
             user: centos
 ####################
