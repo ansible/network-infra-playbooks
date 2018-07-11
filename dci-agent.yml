@@ -57,6 +57,12 @@
             minute: '0'
             job: source /etc/dci/feeders.sh &&  bash -c "cd /usr/share/dci/dci-feeders/ && ansible-playbook playbook.yml"
             user: centos
+        - name: Set cron for deleting old checouts
+          cron:
+            name: dci checkout cleanup
+            minute: '0'
+            job: 'find /home/centos/dci-workspace/ansible/ -mindepth 1 -maxdepth 1 -type d  -mtime +3 -exec rm -rf {} \;'
+            user: centos
 ####################
 
 ##### NOTE If you change the cron ensure you manually delete all existing cron entries on dci-agent before running this role
