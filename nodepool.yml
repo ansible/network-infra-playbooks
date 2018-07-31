@@ -69,16 +69,16 @@
         dest: /var/lib/nodepool
         owner: nodepool
         group: nodepool
-    - name: Download openstack.py dynamic inventory from upstream
+    - name: Download openstack_inventory.py dynamic inventory from upstream
       get_url:
-        url: https://raw.githubusercontent.com/ansible/ansible/devel/contrib/inventory/openstack.py
+        url: https://raw.githubusercontent.com/ansible/ansible/devel/contrib/inventory/openstack_inventory.py
         dest: /var/lib/nodepool/inventory
         owner: nodepool
         group: nodepool
         mode: 0755
-    - name: Make openstack dynamic inventory executable
+    - name: Make openstack_inventory.py dynamic inventory executable
       file:
-        path: '/var/lib/nodepool/inventory/openstack.py'
+        path: '/var/lib/nodepool/inventory/openstack_inventory.py'
         mode: 0744
         owner: nodepool
         group: nodepool
